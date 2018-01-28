@@ -4,8 +4,8 @@
         <name family="Yacht" given="Raymond Luxury" preferred="Throatwobbler Mangrove" />
         <birthdate>1941-01-08</birthdate>
         <contacts>
-            <contact type="email" value="yacht@example.com" preferred="true" />
-            <contact type="telephone" value="+44 1632 960777" />
+            <email value="yacht@example.com" preferred="true" />
+            <phone value="+44 1632 960777" />
             <address type="home">
                 12 Foo Street
                 London, UK
