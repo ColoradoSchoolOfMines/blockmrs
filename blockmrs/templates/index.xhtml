@@ -5,12 +5,45 @@
 
     <body py:block="body" py:strip="True">
       <div class="row">
-        <div class="col-md-3">
-
-        </div>
-        <div class="col-md-9">
-
+        <div class="col-md-12">
+          <div class="jumbotron">
+            <h1>Introducing BlockMRS</h1>
+            <p>
+              BlockMRS is a privacy concious, decentralized, blockchain-backed,
+              medical record system for the 21st Century.
+            </p>
+            <p>
+              It stores patient records in IPFS using state-of-the art
+              asymetric encryption giving patients control over their health
+              data.
+            </p>
+            <p>
+              <a class="btn btn-primary btn-lg sign-up" href="${tg.url('/login?signup=True')}" target="_blank">
+                ${h.icon('book')} Sign Up
+              </a>
+            </p>
+          </div>
         </div>
       </div>
+
+      <!--
+      <div class="row">
+        <div class="col-md-4">
+          <h3>Code your data model</h3>
+          <p> Design your data <code>model</code>, Create the database, and Add some bootstrap data.</p>
+        </div>
+
+        <div class="col-md-4">
+          <h3>Design your URL architecture</h3>
+          <p> Decide your URLs, Program your <code>controller</code> methods, Design your
+            <code>templates</code>, and place some static files (CSS and/or Javascript). </p>
+        </div>
+
+        <div class="col-md-4">
+          <h3>Distribute your app</h3>
+          <p> Test your source, Generate project documents, Build a distribution.</p>
+        </div>
+      </div>
+      -->
     </body>
 </html>
