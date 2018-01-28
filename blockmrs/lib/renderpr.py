@@ -57,12 +57,18 @@ class Namespace(XMLDataType):
 
 class Field(XMLDataType):
     name = None
+    icon = None
 
     # overrride PLEASE
     def render(self, ht=None):
         dl = h.dl(klass='dl-horizontal')
         dt = h.dt()
-        dt += self.name
+        label = h.span(klass='field-label')
+        if self.icon:
+            label += h.i(klass=' '.join(["fa", "fa-birthday-cake"]))
+            label += ' '
+        label += self.name
+        dt += label
         dl += dt
         dd = h.dd()
         dd += ht if ht else self.elem.text
@@ -112,6 +118,11 @@ class Name(Field):
         if self.preferred:
             fmt_string += ' ({})'
         return super().render(ht=fmt_string.format(self.family, self.given, self.preferred))
+
+class Birthdate(Field):
+    xmlname = 'birthdate'
+    name = 'Date of Birth'
+    icon = 'fa-birthday-cake'
 
 fields = {k.xmlname: k for k in globals().values() if hasattr(k, 'xmlname')}
 

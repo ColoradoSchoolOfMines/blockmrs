@@ -77,3 +77,14 @@
     padding-left: 25px;
     padding-right: 25px;
 }
+
+.field-label {
+    background-color: #121212;
+    color: #ffffff;
+    padding: 4px;
+}
+
+.field-label:hover {
+    background-color: #0099cc;
+    color: #ffffff;
+}
