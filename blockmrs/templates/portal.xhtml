@@ -4,6 +4,7 @@
     </head>
 
     <body py:block="body" py:strip="True">
+      <h1 class="page-header" py:if="name" py:content="name" />
       ${Markup(view.render_view())}
     </body>
 </html>
