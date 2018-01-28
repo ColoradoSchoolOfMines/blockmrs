@@ -3,8 +3,8 @@ import os
 from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import padding, rsa
-from blockchain import Blockchain
 from cryptography.hazmat.primitives import serialization as serial
+from blockmrs.lib import blockchain
 
 
 def store_record(data_bytes, user_password_hash):
@@ -67,8 +67,6 @@ def store_record(data_bytes, user_password_hash):
         format=serialization.PublicFormat.SubjectPublicKeyInfo
     )
 
-
-    blockchain = Blockchain('chain.dat')
     blockchain_id = blockchain.add_blockchain_entry(ipfs_hash_bytes,
                                                     hash_signature,
                                                     public_key_bytes,
@@ -80,7 +78,6 @@ def store_record(data_bytes, user_password_hash):
 
 def retrieve_record(blockchain_id, serialized_private_key, user_password_hash):
 
-    blockchain = Blockchain('chain.dat')
     blockchain_entry = blockchain.lookup_blockchain_entry(blockchain_id)
     ipfs_hash = blockchain_entry[0].decode(encoding='UTF-8')
 
@@ -114,4 +111,3 @@ def retrieve_record(blockchain_id, serialized_private_key, user_password_hash):
             label=None
         )
     )
-
