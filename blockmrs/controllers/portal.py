@@ -2,39 +2,31 @@
 
 from tg import expose, redirect, abort
 
-from depot.manager import DepotManager
-
 from blockmrs.lib.base import BaseController
 from blockmrs.model import DBSession, User
+from blockmrs.lib.renderpr import match_field
+from xml.etree import ElementTree as ET
 
 __all__ = ['UserPortalController']
 
-
-class PortalController(BaseController):
-    def __init__(self, user):
-        self.user = user
+class NamespaceViewController(BaseController):
+    def __init__(self, nselem):
+        self.nselem = nselem
 
     @expose('blockmrs.templates.portal')
     def _default(self):
         """Handle the user's profile page."""
-        return dict(page='profile', u=self.user)
-
-    @expose()
-    def picture(self):
-        """Return the user's profile picture."""
-        if self.user.profile_pic:
-            redirect(DepotManager.url_for(self.user.profile_pic.path))
-        else:
-            redirect('/img/default_profile_pic.jpg')
-
+        return dict(page='profile', view=match_field(self.nselem))
 
 class UserPortalController(BaseController):
     @expose()
-    def _lookup(self, uname, *args):
-        user = DBSession.query(User) \
-                        .filter(User.user_name == uname) \
-                        .one_or_none()
-        if not user:
-            abort(404, "No such user")
+    def _lookup(self, *args):
+        xpath = '/'.join(('.', ) + args)
+        tree = ET.parse('data/yacht.xml')
+        root = tree.getroot()
+        node = root.find(xpath)
 
-        return PortalController(user), args
+        if not node:
+            abort(404, "xpath: {}".format(xpath))
+
+        return NamespaceViewController(node), args
