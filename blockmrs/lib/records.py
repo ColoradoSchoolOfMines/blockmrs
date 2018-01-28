@@ -67,10 +67,10 @@ def store_record(data_bytes, user_password_hash):
         format=serialization.PublicFormat.SubjectPublicKeyInfo
     )
 
-    record_id = blockchain.new_entry(ipfs_hash_bytes,
-                                     hash_signature,
-                                     public_key_bytes,
-                                     public_key_bytes)
+    _, record_id = blockchain.new_entry(ipfs_hash_bytes,
+                                        hash_signature,
+                                        public_key_bytes,
+                                        public_key_bytes)
 
     os.remove('/tmp/encrypted.txt')
     return (serialized_private_key, record_id)
