@@ -1,0 +1,4 @@
+recursive-include blockmrs/public *
+include blockmrs/public/favicon.ico
+recursive-include blockmrs/i18n *
+recursive-include blockmrs/templates *

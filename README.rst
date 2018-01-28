@@ -1,4 +1,6 @@
-blockmrs
-========
+BlockMRS
+======================================
+Sports Medical Records on a Blockchain
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-BlockMRS is a blockchain medical record system.
+TODO: Somebody write a README

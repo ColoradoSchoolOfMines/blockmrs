@@ -1,0 +1,35 @@
+<html py:extends="master.xhtml" py:strip="True">
+    <head py:block="head" py:strip="True">
+        <title py:block="master_title">Learning TurboGears 2.3: Information about TG and WSGI</title>
+        <meta name="generator" content="HTML Tidy for Linux/x86 (vers 11 February 2007), see www.w3.org" />
+        <style>
+            .table {
+              word-wrap: break-word;
+              table-layout: fixed;
+            }
+        </style>
+    </head>
+
+    <body py:block="body" py:strip="True">
+      <div class="row">
+        <div class="col-xs-12">
+          <h2>The WSGI nature of the framework</h2>
+
+          <p>In this page you can see all the WSGI variables your request object has,
+             the ones in capital letters are required by the spec, then a sorted by
+             component list of variables provided by the Components, and at last
+             the "wsgi." namespace with very useful information about your WSGI Server</p>
+          <p>The keys in the environment are:</p>
+
+          <div class="table-responsive">
+            <table class="table table-hover">
+                <tr py:for="key in sorted(environment)">
+                    <td>${key}</td>
+                    <td><div>${str(environment[key])}</div></td>
+                </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </body>
+</html>

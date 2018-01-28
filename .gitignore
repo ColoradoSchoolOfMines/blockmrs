@@ -1,0 +1,14 @@
+# This is the gitignore for the BlockMRS project
+# Please do not ignore files that are specific to your setup here
+# Ignore those in a global gitignore
+
+*.pyc
+__pycache__
+/devdata.db
+/development.ini
+/production.ini
+*.egg
+*.egg-info
+dist
+build
+pip-log.txt
