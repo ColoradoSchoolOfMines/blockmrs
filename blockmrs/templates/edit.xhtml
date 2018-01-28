@@ -1,0 +1,17 @@
+<html py:extends="master.xhtml" py:strip="True">
+    <head py:block="head" py:strip="True">
+      <title py:block="master_title">Editing ${xpath}</title>
+    </head>
+
+    <body py:block="body" py:strip="True">
+        <form method="POST">
+            <textarea name="editor" rows="24" cols="100" style="font-family: monospace">
+${content}
+            </textarea>
+            <div style="padding-top: 10px">
+                <input type="submit" class="btn btn-primary" value="Save Changes" />
+                <a href="." class="btn btn-default">Cancel</a>
+            </div>
+        </form>
+    </body>
+</html>

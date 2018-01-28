@@ -8,6 +8,7 @@ from blockmrs.lib.base import BaseController
 from blockmrs.model import DBSession, User, PrivateKey
 from blockmrs.lib.renderpr import match_field
 from blockmrs.lib.records import retrieve_record, store_record
+from xml.dom import minidom
 
 
 __all__ = ['UserPortalController']
@@ -21,6 +22,34 @@ class NamespaceViewController(BaseController):
         """Handle the user's profile page."""
         return dict(page='profile', view=match_field(self.nselem))
 
+class NamespaceEditController(BaseController):
+    def __init__(self, root, xpath, user, record):
+        self.root = root
+        self.xpath = xpath
+        self.user = user
+        self.record = record
+
+    @expose('blockmrs.templates.edit')
+    def _default(self):
+        root = ET.fromstring(self.record)
+        node = root.find(self.xpath)
+        if request.method == 'POST':
+            try:
+                new_node = ET.fromstring(request.POST['editor'])
+            except:
+                abort(500, 'You made a mistake writing the XML.')
+            node.clear()
+            for ch in new_node:
+                node.append(ch)
+            node.attrib = new_node.attrib
+            pk, blockchain_id = store_record(ET.tostring(root), b'foobar')
+            self.user.blockchain_id_cache = blockchain_id
+            private_key = PrivateKey(user_id=self.user.id, blockchain_id=blockchain_id, private_key=pk)
+            DBSession.add(private_key)
+            DBSession.add(self.user)
+            redirect('/p/' + self.xpath[2:] + '/')
+
+        return dict(page='profile', content=minidom.parseString(ET.tostring(node)).toprettyxml(indent="  ").partition('\n')[2], xpath=self.xpath)
 
 class UserPortalController(BaseController):
     allow_only = predicates.not_anonymous()
@@ -66,6 +95,11 @@ class UserPortalController(BaseController):
         record = retrieve_record(user.blockchain_id_cache, private_key.private_key,
                                  user_password_hash)
 
+        edit = False
+        if args and args[-1] == 'edit':
+            args = args[:-1]
+            edit = True
+
         xpath = '/'.join(('.', ) + args)
         root = ET.fromstring(record)
         node = root.find(xpath)
@@ -73,8 +107,7 @@ class UserPortalController(BaseController):
         if not node:
             abort(404, "xpath: {}".format(xpath))
 
-        if xpath.endswith('/edit'):
-            abort(404, 'edit')
-            # TODO: Sumner fix this
+        if edit:
+            return NamespaceEditController(root, xpath, user, record), args
 
         return NamespaceViewController(node), args

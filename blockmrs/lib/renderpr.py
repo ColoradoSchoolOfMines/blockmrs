@@ -29,7 +29,7 @@ class Namespace(XMLDataType):
         text += self.name
         inner_d += text
         d += inner_d
-        a = h.a(href=self.xmlname + '/')
+        a = h.a(href=self.xmlname + ('/' if self.xmlname != 'edit' else ''))
         a += d
         return a
 
@@ -48,6 +48,7 @@ class Namespace(XMLDataType):
             wrapper = h.li(klass='list-group-item')
             wrapper += field.render()
             fields_ul += wrapper
+        buttons_d += EditButton([]).render()
         for btn in (f for f in self.fields if isinstance(f, Namespace)):
             buttons_d += btn.render()
         fields_panel += fields_ul
@@ -161,6 +162,10 @@ class Address(Field):
         ht += self.elem.text.strip().replace('\n', '<br />')
         return super().render(ht=ht)
 
+class EditButton(Namespace):
+    xmlname = 'edit'
+    name = 'Edit'
+    icon = 'fa-pencil'
 
 fields = {k.xmlname: k for k in globals().values() if hasattr(k, 'xmlname')}
 
