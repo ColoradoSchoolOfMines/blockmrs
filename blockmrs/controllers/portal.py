@@ -1,11 +1,13 @@
 """Portal controller module"""
 
-from tg import expose, redirect, abort
+from tg import expose, request, abort, redirect
+from xml.etree import ElementTree as ET
 
 from blockmrs.lib.base import BaseController
-from blockmrs.model import DBSession, User
+from blockmrs.model import DBSession, User, PrivateKey
 from blockmrs.lib.renderpr import match_field
-from xml.etree import ElementTree as ET
+from blockmrs.lib.records import retrieve_record, store_record
+
 
 __all__ = ['UserPortalController']
 
@@ -22,8 +24,27 @@ class NamespaceViewController(BaseController):
 class UserPortalController(BaseController):
     @expose()
     def _lookup(self, *args):
+        uname = request.identity['repoze.who.userid']
+
+        user = DBSession.query(User) \
+                        .filter(User.user_name == uname) \
+                        .one_or_none()
+
+        if not user:
+            abort(501, 'Not logged in')
+
+        if not user.blockchain_id_cache:
+            redirect('/p/edit')
+
+        private_key = DBSession.query(PrivateKey)\
+                               .filter(PrivateKey.blockchain_id == user.blockchain_id_cache)\
+                               .one_or_none()
+        user_password_hash = b'foobar'  # this would be the real user's password hash
+        record = retrieve_record(user.blockchain_id_cache, private_key,
+                                 user_password_hash)
+
         xpath = '/'.join(('.', ) + args)
-        tree = ET.parse('data/yacht.xml')
+        tree = ET.fromstring(record)
         root = tree.getroot()
         node = root.find(xpath)
 

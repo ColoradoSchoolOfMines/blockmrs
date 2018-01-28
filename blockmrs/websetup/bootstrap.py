@@ -44,15 +44,27 @@ def bootstrap(command, conf, vars):
         p.groups.append(g)
         model.DBSession.add(p)
 
-        u = model.User()
-        u.user_name = 'student'
-        u.display_name = 'Default Student'
-        model.DBSession.add(u)
+        u5 = model.User()
+        u5.user_name = 'raymond'
+        u5.display_name = 'Raymond Luxury Yacht'
+        model.DBSession.add(u5)
 
         g = model.Group()
-        g.group_name = 'students'
-        g.display_name = 'Students'
-        g.users.append(u)
+        g.group_name = 'patients'
+        g.display_name = 'Patients'
+        g.users.append(u5)
+
+        u6 = model.User()
+        u6.user_name = 'graham'
+        u6.display_name = 'Graham Chapman'
+        model.DBSession.add(u6)
+
+        g = model.Group()
+        g.group_name = 'doctor'
+        g.display_name = 'Doctors'
+        g.users.append(u6)
+
+
         model.DBSession.add(g)
 
         model.DBSession.flush()

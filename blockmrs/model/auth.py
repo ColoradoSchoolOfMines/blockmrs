@@ -53,6 +53,7 @@ class PrivateKey(DeclarativeBase):
 
     id = Column(Integer, autoincrement=True, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    blockchain_id = Column(Integer, nullable=False)
     private_key = Column(Binary, nullable=False)
 
 
@@ -63,6 +64,7 @@ class User(DeclarativeBase):
     user_name = Column(Unicode(16), unique=True, nullable=False)
     display_name = Column(Unicode(255))
     created = Column(DateTime, default=datetime.now)
+    blockchain_id_cache = Column(Integer)
     private_keys = relation('PrivateKey')
 
     def __repr__(self):

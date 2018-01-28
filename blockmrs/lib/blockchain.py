@@ -6,6 +6,9 @@ class Blockchain:
         self.blockchain = []
         self.file_name = file_name
 
+        with open(self.file_name, 'w+'):
+            pass
+
     def add_blockchain_entry(self, ipfs_hash, user_sig, user_public_key,
                              recipient_public_key):
 
