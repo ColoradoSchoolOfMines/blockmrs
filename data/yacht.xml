@@ -1,0 +1,28 @@
+<patient>
+    <patient_id>5eba8370-c74e-4250-93a9-8dfcc61e9176</patient_id>
+    <personal_information>
+        <name family="Yacht" given="Raymond Luxury" preferred="Throatwobbler Mangrove" />
+        <birthdate>1941-01-08</birthdate>
+        <contacts>
+            <email value="yacht@example.com" preferred="true" />
+            <phone value="+44 1632 960777" />
+            <address type="home">
+                12 Foo Street
+                London, UK
+            </address>
+        </contacts>
+    </personal_information>
+    <billing>
+
+    </billing>
+    <medical>
+        <note date="1980-03-05T14:36:44+0100" operator="b6a10935-3d4c-4553-86f7-987cd4b38214">
+            Throatwobbler has a very large nose today. Perhaps it is fake?
+
+            He claims to have issues interviewing on the television.
+        </note>
+        <note date="1980-03-03T08:33:24+0100" operator="b6a10935-3d4c-4553-86f7-987cd4b38214">
+            Throatwobbler is getting better at identifying body parts.
+        </note>
+    </medical>
+</patient>

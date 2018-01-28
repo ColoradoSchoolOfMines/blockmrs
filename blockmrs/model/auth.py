@@ -2,7 +2,7 @@ import os
 from datetime import datetime, time
 __all__ = ['User', 'Group', 'Permission']
 
-from sqlalchemy import Table, ForeignKey, Column
+from sqlalchemy import Table, ForeignKey, Column, Binary
 from sqlalchemy.types import Unicode, Integer, DateTime, Boolean, Numeric
 from sqlalchemy.orm import relation
 from blockmrs.model import DeclarativeBase, metadata, DBSession
@@ -47,6 +47,16 @@ class Group(DeclarativeBase):
     def __str__(self):
         return self.group_name
 
+
+class PrivateKey(DeclarativeBase):
+    __tablename__ = 'privatekeys'
+
+    id = Column(Integer, autoincrement=True, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    blockchain_id = Column(Integer, nullable=False)
+    private_key = Column(Binary, nullable=False)
+
+
 class User(DeclarativeBase):
     __tablename__ = 'users'
 
@@ -54,6 +64,8 @@ class User(DeclarativeBase):
     user_name = Column(Unicode(16), unique=True, nullable=False)
     display_name = Column(Unicode(255))
     created = Column(DateTime, default=datetime.now)
+    blockchain_id_cache = Column(Integer)
+    private_keys = relation('PrivateKey')
 
     def __repr__(self):
         return 'User("{}")'.format(self.user_name)

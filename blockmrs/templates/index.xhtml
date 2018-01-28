@@ -1,53 +1,62 @@
 <html py:extends="master.xhtml" py:strip="True">
     <head py:block="head" py:strip="True">
-        <title py:block="master_title">Welcome to TurboGears 2.3, standing on the shoulders of giants, since 2007</title>
+        <title py:block="master_title">BlockMRS</title>
     </head>
 
     <body py:block="body" py:strip="True">
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
           <div class="jumbotron">
-            <h1>Welcome to TurboGears 2.3</h1>
-            <p>If you see this page it means your installation was successful!</p>
-            <p>TurboGears 2 is rapid web application development toolkit designed to make your life easier.</p>
+            <h1>Introducing BlockMRS</h1>
             <p>
-              <a class="btn btn-primary btn-lg" href="http://www.turbogears.org" target="_blank">
-                ${h.icon('book')} Learn more
+              BlockMRS is a privacy concious, decentralized, blockchain-backed,
+              medical record system for the 21st Century.
+            </p>
+            <p>
+              It stores patient records in IPFS using state-of-the art
+              asymetric encryption giving patients control over their health
+              data.
+            </p>
+            <p>
+              <a class="btn btn-primary btn-lg sign-up" href="${tg.url('/login?signup=True')}">
+                ${h.icon('book')} Sign Up
               </a>
             </p>
           </div>
-        </div>
-        <div class="col-md-4 hidden-xs hidden-sm">
-          <a class="btn btn-info btn-sm active" href="http://turbogears.readthedocs.io/en/latest">${h.icon('book')} TG2 Documentation</a> <span class="label label-success">new</span><em> Get Started</em><br/>
-            <br/>
-          <a class="btn btn-info btn-sm active" href="http://turbogears.readthedocs.io/en/latest/cookbook/cookbook.html">${h.icon('book')} TG2 CookBook</a><em> Read the Cookbook</em> <br/>
-            <br/>
-          <a class="btn btn-info btn-sm active" href="http://groups.google.com/group/turbogears">${h.icon('comment')} Join the Mail List</a> <em>for help/discussion</em><br/>
-            <br/>
-          <a class="btn btn-info btn-sm active" href="http://runnable.com/TurboGears">${h.icon('play')} Play on Runnable</a> <em>for basic examples</em><br/>
-            <br/>
-          <a class="btn btn-info btn-sm active" href="http://stackoverflow.com/questions/tagged/turbogears2">${h.icon('search')} Search Stackoverflow</a> <em>for questions</em>
         </div>
       </div>
 
       <div class="row">
         <div class="col-md-4">
-          <h3>Code your data model</h3>
-          <p> Design your data <code>model</code>, Create the database, and Add some bootstrap data.</p>
+          <h3>Privacy Concious</h3>
+          <p>
+            BlockMRS is designed with the patient's privacy in mind.  BlockMRS
+            generates a new public-private key for every transaction on the
+            blockchain and each block has a constant size. This ensures that
+            malicious actors cannot infer anything about a patient by
+            inspecting the blockchain.
+          </p>
         </div>
 
         <div class="col-md-4">
-          <h3>Design your URL architecture</h3>
-          <p> Decide your URLs, Program your <code>controller</code> methods, Design your
-            <code>templates</code>, and place some static files (CSS and/or Javascript). </p>
+          <h3>Distributed</h3>
+          <p>
+            BlockMRS uses a distrubuted filesystem called <i>InterPlanetary
+              File System (IPFS)</i> to store medical records. This creates a
+            common way for medical service providers to access the latest,
+            up-to-date patient data.
+          </p>
         </div>
 
         <div class="col-md-4">
-          <h3>Distribute your app</h3>
-          <p> Test your source, Generate project documents, Build a distribution.</p>
+          <h3>Blockchain-Backed</h3>
+          <p>
+            BlockMRS takes advantage of the latest blockchain technology to
+            allow for seamless transfer of medical data. Blocks on the
+            blockchain are signed and ecrypted to ensure authenticity and
+            privacy.
+          </p>
         </div>
       </div>
-
-      <em class="pull-right small"> Thank you for choosing TurboGears.</em>
     </body>
 </html>

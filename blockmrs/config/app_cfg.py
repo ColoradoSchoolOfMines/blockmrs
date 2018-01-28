@@ -10,7 +10,6 @@ from tg.configuration import AppConfig
 import blockmrs
 import transaction
 import tg.predicates
-import random
 from blockmrs import model, lib
 from blockmrs.model.auth import User
 from tg import request
@@ -73,7 +72,8 @@ class ApplicationAuthMetadata(TGAuthMetadata):
         ).first()
 
         if not user:
-            user = User(user_name=login, display_name=login)
+            display_name = identity.get('full_name', login)
+            user = User(user_name=login, display_name=display_name)
             self.sa_auth.dbsession.add(user)
             self.sa_auth.dbsession.flush()
             transaction.commit()

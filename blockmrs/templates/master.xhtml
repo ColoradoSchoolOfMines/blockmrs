@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta charset="${response.charset}" />
 
-  <title py:block="master_title">Your generic title goes here</title>
+  <title py:block="master_title">BlockMRS</title>
   <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/bootstrap.min.css')}" />
+  <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/font-awesome.min.css')}" />
   <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/style.css')}" />
 
   <py:block name="head"></py:block>
@@ -23,19 +24,21 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="${tg.url('/')}">
-        <img src="${tg.url('/img/turbogears_logo.png')}" height="20" alt="TurboGears 2"/>
-        ${getattr(tmpl_context, 'project_name', 'turbogears2')}
+        <img src="${tg.url('/img/logo.svg')}" height="100%" />
       </a>
     </div>
 
     <div class="collapse navbar-collapse" id="navbar-content">
       <ul class="nav navbar-nav">
-        <li class="${('', 'active')[self.defined('page') and page=='index']}"><a href="${tg.url('/')}">Welcome</a></li>
+        <li class="${('', 'active')[self.defined('page') and page=='index']}"><a href="${tg.url('/')}">Home</a></li>
+        <li py:if="request.identity and request.identity['repoze.who.userid'] == 'graham'"><a href="${tg.url('/')}">Patients</a></li>
       </ul>
       <ul py:if="tg.auth_stack_enabled" class="nav navbar-nav navbar-right">
+        <li py:if="not request.identity"><a href="${tg.url('/login?signup=True')}">Sign Up</a></li>
         <li py:if="not request.identity"><a href="${tg.url('/login')}">Login</a></li>
+        <li py:if="request.identity"><a href="${tg.url('/p/')}">User Portal</a></li>
         <li py:if="request.identity"><a href="${tg.url('/logout_handler')}">Logout</a></li>
-        <li py:if="request.identity"><a href="${tg.url('/admin')}">Admin</a></li>
+        <li py:if="tg.predicates.has_permission('admin')"><a href="${tg.url('/admin')}">Admin</a></li>
       </ul>
     </div>
   </nav>
@@ -58,7 +61,7 @@
   <!-- Footer -->
   <footer class="footer hidden-xs hidden-sm">
     <p>
-      Copyright &copy; ${getattr(tmpl_context, 'project_name', 'TurboGears2')} ${h.current_year()}
+      Copyright &copy; BlockMRS ${h.current_year()}
     </p>
   </footer>
 
