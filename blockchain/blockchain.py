@@ -3,6 +3,11 @@ import json
 from time import time
 from urllib.parse import urlparse
 from uuid import uuid4
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives import hashes
+from cryptography.exceptions import InvalidSignature
 
 import requests
 
@@ -10,6 +15,7 @@ import requests
 class Blockchain:
     def __init__(self):
         self.current_transactions = []
+        self.records = {}
         self.chain = []
         self.nodes = set()
 
@@ -118,22 +124,58 @@ class Blockchain:
         self.chain.append(block)
         return block
 
-    def new_transaction(self, sender, recipient, amount):
-        """
-        Creates a new transaction to go into the next mined Block
+    @staticmethod
+    def verify_sig(data, sig, pub_key):
+        serial_pub_key = serialization.load_pem_public_key(pub_key,
+                                                           backend=default_backend())
+        try:
+            pub_key.verify(
+                sig,
+                data,
+                padding.PSS(
+                    mgf=padding.MGF1(hashes.SHA256()),
+                    salt_length=padding.PSS.MAX_LENGTH
+                ))
+            return True
+        except InvalidSignature:
+            return False
 
-        :param sender: Address of the Sender
-        :param recipient: Address of the Recipient
-        :param amount: Amount
-        :return: The index of the Block that will hold this transaction
+    def new_entry(self, ipfs_hash, user_sig, user_public_key,
+                  recipient_public_key):
         """
-        self.current_transactions.append({
-            'sender': sender,
-            'recipient': recipient,
-            'amount': amount,
-        })
+        Creates a new entry to go into the next mined Block
 
-        return self.last_block['index'] + 1
+        :param ipfs_hash: IPFS hash
+        :param user_sig: User signature
+        :param user_public_key: Public key corresponding to signature
+        :param recipient_public_key: Public key corresponding for recipient
+        :return: The index of the Block that will hold this entry and
+                 the id of the entry
+        """
+
+        if not Blockchain.verify_sig(ipfs_hash, user_sig, user_public_key):
+            print('Invalid signature')
+            return
+
+        k = hashlib.sha256()
+        k.update(ipfs_hash)
+        k.update(user_sig)
+        k.update(user_public_key)
+        k.update(recipient_public_key)
+
+        self.current_transactions.append(k.hexdigest())
+
+        self.records[k.hexdigest()] = {
+            'ipfs_hash': ipfs_hash,
+            'user_sig': user_sig,
+            'user_public_key': user_public_key,
+            'recipient_public_key': recipient_public_key,
+        }
+
+        return self.last_block['index'] + 1, k.hexdigest()
+
+    def get_entry(self, entry_id):
+        return self.records[entry_id]
 
     @property
     def last_block(self):
