@@ -16,10 +16,7 @@ class Blockchain:
             chain_file.write(recipient_public_key)
 
         with open(self.file_name, 'rb') as chain_file:
-            return int(os.path.getsize('/tmp/bullshit.dat'))//1658 - 1
-
-
-
+            return int(os.path.getsize(self.file_name))//1658 - 1
 
     def lookup_blockchain_entry(self, index):
 
@@ -31,6 +28,5 @@ class Blockchain:
             user_sig = chain_file.read(512)
             user_public_key = chain_file.read(550)
             recipient_public_key = chain_file.read(550)
-
 
         return ipfs_hash, user_sig, user_public_key, recipient_public_key
