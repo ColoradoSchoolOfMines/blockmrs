@@ -11,6 +11,7 @@ from tgext.admin.controller import AdminController
 from blockmrs.lib.base import BaseController
 from blockmrs.controllers.error import ErrorController
 from blockmrs.controllers.portal import UserPortalController
+from blockmrs.controllers.symptom import SymptomController
 
 __all__ = ['RootController']
 
@@ -18,6 +19,7 @@ class RootController(BaseController):
     admin = AdminController(model, DBSession, config_type=AdminConfig, translations=config.sa_auth.translations)
     error = ErrorController()
     p = UserPortalController()
+    symptom = SymptomController()
 
     def _before(self, *args, **kw):
         tmpl_context.project_name = "BlockMRS"

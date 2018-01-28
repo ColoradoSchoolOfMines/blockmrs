@@ -1,0 +1,168 @@
+<html py:extends="master.xhtml" py:strip="True">
+    <head py:block="head" py:strip="True">
+        <title py:block="master_title">Enter Symptoms</title>
+    </head>
+
+<body py:block="body" py:strip="True">
+  <h1>Enter Symptoms</h1>
+
+  <form action="${tg.url('/symptom/diagnosis')}" method="get"
+    accept-charset="UTF-8" class="form-horizontal">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <b>1. Are they concious?</b>
+      </div>
+      <div class="panel-body">
+        <i>
+          Not everyone who gets a concussion will lose consciousness, but some
+          people do.
+        </i>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios1" id="optionsRadios1" value="option1" />
+            The patient is <b>unconcious</b>
+          </label>
+        </div>
+
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios1" id="optionsRadios1" value="option1" />
+            The patient is <b>concious</b>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <b>2. Is their speech slurred?</b>
+      </div>
+      <div class="panel-body">
+        <i>
+          Ask the person some basic questions such as, "What is your name?" and
+          "Do you know where you are?"
+        </i>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios2" id="optionsRadios1" value="option1" />
+            The patient's speech <b>is</b> slurred
+          </label>
+        </div>
+
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios2" id="optionsRadios1" value="option1" />
+            The patient's speech is <b>not</b> slurred
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <b>3. Does the patient remember what happened?</b>
+      </div>
+      <div class="panel-body">
+        <i>
+          If the person has a blank stare, seems confused, or doesn’t know
+          where they are, it could be a sign of a brain injury.
+        </i>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios3" id="optionsRadios1" value="option1" />
+            The patient is <b>confused</b>
+          </label>
+        </div>
+
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios3" id="optionsRadios1" value="option1" />
+            The patient is <b>not</b> confused
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <b>4. Is the patient experiencing nausea or vomiting?</b>
+      </div>
+      <div class="panel-body">
+        <i>
+          If someone vomits, especially repeatedly, after being hit in the head
+          or involved in another type of accident, this usually indicates a
+          concussion.
+        </i>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios4" id="optionsRadios1" value="option1" />
+            The patient is <b>nauseated or vomiting</b>
+          </label>
+        </div>
+
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios4" id="optionsRadios1" value="option1" />
+            The patient is <b>not</b> nauseated or vomiting
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <b>5. Is the patient's balance or coordination impaired?</b>
+      </div>
+      <div class="panel-body">
+        <i>
+          People with concussions often have problems with their motor skills,
+          such as being unable to walk in a straight line or catch a ball.
+          Check if the person is having trouble with these things or has a
+          delayed reaction time.
+        </i>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios5" id="optionsRadios1" value="option1" />
+            The patient's balance or coordination <b>is</b> impaired
+          </label>
+        </div>
+
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios5" id="optionsRadios1" value="option1" />
+            The patient's balance or coordination is <b>not</b> impaired
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <b>6. Is the victim experiencing a headache, blurred vision, or dizziness?</b>
+      </div>
+      <div class="panel-body">
+        <i>
+          A headache that lasts more than a few minutes is a common sign of a
+          concussion. Blurred vision, “seeing stars,” and/or feelings of
+          dizziness or fogginess may also indicate a concussion.
+        </i>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios6" id="optionsRadios1" value="option1" />
+            The patient <b>does</b> have a headache, blurred vision, or dizziness.
+          </label>
+        </div>
+
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios6" id="optionsRadios1" value="option1" />
+            The patient <b>does not</b> have a headache, blurred vision, or dizziness.
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</body>
+</html>
