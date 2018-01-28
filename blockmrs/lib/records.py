@@ -1,5 +1,6 @@
 import ipfsapi
 import os
+import sys
 from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import padding, rsa
@@ -73,6 +74,11 @@ def store_record(data_bytes, user_password_hash):
                                                     public_key_bytes)
 
     os.remove('/tmp/encrypted.txt')
+
+    if blockchain_id is False:
+        print('Bad key signature', file=sys.stderr)
+        return
+
     return (serialized_private_key, blockchain_id)
 
 

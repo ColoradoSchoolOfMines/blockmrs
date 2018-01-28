@@ -1,4 +1,9 @@
 import os
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization as serial
+from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives import hashes
+from cryptography.exceptions import InvalidSignature
 
 
 class Blockchain:
@@ -6,8 +11,30 @@ class Blockchain:
         self.blockchain = []
         self.file_name = file_name
 
+    @staticmethod
+    def verify_ipfs_hash(ipfs_hash, user_sig, user_public_key):
+        public_key = serial.load_der_public_key(user_public_key,
+                                                backend=default_backend())
+        try:
+            public_key.verify(
+                user_sig,
+                ipfs_hash,
+                padding.PSS(
+                    mgf=padding.MGF1(hashes.SHA256()),
+                    salt_length=padding.PSS.MAX_LENGTH
+                ),
+                hashes.SHA256()
+            )
+            return True
+        except InvalidSignature:
+            return False
+
     def add_blockchain_entry(self, ipfs_hash, user_sig, user_public_key,
                              recipient_public_key):
+        if not Blockchain.verify_ipfs_hash(ipfs_hash,
+                                           user_sig,
+                                           user_public_key):
+            return False
 
         with open(self.file_name, 'ab') as chain_file:
             chain_file.write(ipfs_hash)
