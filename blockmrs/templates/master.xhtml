@@ -31,7 +31,6 @@
     <div class="collapse navbar-collapse" id="navbar-content">
       <ul class="nav navbar-nav">
         <li class="${('', 'active')[self.defined('page') and page=='index']}"><a href="${tg.url('/')}">Home</a></li>
-        <li py:if="request.identity and request.identity['repoze.who.userid'] == 'graham'"><a href="${tg.url('/')}">Patients</a></li>
       </ul>
       <ul py:if="tg.auth_stack_enabled" class="nav navbar-nav navbar-right">
         <li py:if="not request.identity"><a href="${tg.url('/login?signup=True')}">Sign Up</a></li>

@@ -14,13 +14,14 @@ from xml.dom import minidom
 __all__ = ['UserPortalController']
 
 class NamespaceViewController(BaseController):
-    def __init__(self, nselem):
+    def __init__(self, nselem, name):
         self.nselem = nselem
+        self.name = name
 
     @expose('blockmrs.templates.portal')
     def _default(self):
         """Handle the user's profile page."""
-        return dict(page='profile', view=match_field(self.nselem))
+        return dict(page='profile', view=match_field(self.nselem), name=self.name)
 
 class NamespaceEditController(BaseController):
     def __init__(self, root, xpath, user, record):
@@ -76,7 +77,7 @@ class UserPortalController(BaseController):
             birthdate = ET.SubElement(personal, 'birthdate')
             birthdate.text = '1941-01-08'
             contacts = ET.SubElement(personal, 'contacts')
-            email = ET.SubElement(contacts, 'email', attrib={'value': '{}@example.org'.format(user.user_name)})
+            email = ET.SubElement(contacts, 'email', attrib={'value': '{}@example.org'.format(user.user_name), 'primary': 'true'})
             phone = ET.SubElement(contacts, 'phone', attrib={'value': '+44 1632 960777'})
             address = ET.SubElement(contacts, 'address')
             address.text = '\n12 Foo Street\nLondon, UK\n'
@@ -104,10 +105,14 @@ class UserPortalController(BaseController):
         root = ET.fromstring(record)
         node = root.find(xpath)
 
+        name = root.find('name')
+        if name:
+            name = "{}, {}".format(name.get("family"), name.get("given"))
+
         if not node:
             abort(404, "xpath: {}".format(xpath))
 
         if edit:
             return NamespaceEditController(root, xpath, user, record), args
 
-        return NamespaceViewController(node), args
+        return NamespaceViewController(node, name), args
