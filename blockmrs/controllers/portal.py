@@ -53,4 +53,8 @@ class UserPortalController(BaseController):
         if not node:
             abort(404, "xpath: {}".format(xpath))
 
+        if xpath.endswith('/edit'):
+            abort(404, 'edit')
+            # TODO: Sumner fix this
+
         return NamespaceViewController(node), args
