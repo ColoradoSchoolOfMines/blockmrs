@@ -51,7 +51,9 @@ class Blockchain:
                 return False
 
             # Check that the Proof of Work is correct
-            if not self.valid_proof(last_block['proof'], block['proof'], last_block['previous_hash']):
+            if not self.valid_proof(last_block['proof'],
+                                    block['proof'],
+                                    last_block['previous_hash']):
                 return False
 
             last_block = block
@@ -145,7 +147,8 @@ class Blockchain:
         :param block: Block
         """
 
-        # We must make sure that the Dictionary is Ordered, or we'll have inconsistent hashes
+        # We must make sure that the Dictionary is Ordered, or we'll
+        # have inconsistent hashes
         block_string = json.dumps(block, sort_keys=True).encode()
         return hashlib.sha256(block_string).hexdigest()
 
