@@ -76,6 +76,8 @@
     padding-bottom: 0;
     padding-left: 25px;
     padding-right: 25px;
+    margin-right: 10px;
+    background-color: #0099cc;
 }
 
 .field-label {
@@ -86,5 +88,17 @@
 
 .field-label:hover {
     background-color: #0099cc;
+    color: #ffffff;
+}
+
+.preferred {
+    font-weight: bold;
+    background-color: #DC5C4B;
+    color: #ffffff;
+    padding: 4px;
+}
+
+.preferred:hover {
+    background-color: #121212;
     color: #ffffff;
 }

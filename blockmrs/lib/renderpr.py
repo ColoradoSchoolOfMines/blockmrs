@@ -65,7 +65,7 @@ class Field(XMLDataType):
         dt = h.dt()
         label = h.span(klass='field-label')
         if self.icon:
-            label += h.i(klass=' '.join(["fa", "fa-birthday-cake"]))
+            label += h.i(klass=' '.join(["fa", self.icon]))
             label += ' '
         label += self.name
         dt += label
@@ -123,6 +123,44 @@ class Birthdate(Field):
     xmlname = 'birthdate'
     name = 'Date of Birth'
     icon = 'fa-birthday-cake'
+
+class ContactField(Field):
+    icon = 'fa-envelope'
+
+    def __init__(self, elem):
+        self.preferred = bool(elem.get('preferred'))
+        super().__init__(elem)
+
+    def render(self):
+        ht = h.span(klass='contact-info')
+        ht += self.elem.get('value')
+        ht += ' '
+        if self.preferred:
+            label = h.span(klass='preferred')
+            label += 'Preferred'
+            ht += label
+        return super().render(ht=ht)
+
+class Email(ContactField):
+    xmlname = 'email'
+    name = 'Email Address'
+    icon = 'fa-envelope'
+
+class Telephone(ContactField):
+    xmlname = 'phone'
+    name = 'Phone'
+    icon = 'fa-phone'
+
+class Address(Field):
+    xmlname = 'address'
+    name = 'Address'
+    icon = 'fa-home'
+
+    def render(self):
+        ht = h.address()
+        ht += self.elem.text.strip().replace('\n', '<br />')
+        return super().render(ht=ht)
+
 
 fields = {k.xmlname: k for k in globals().values() if hasattr(k, 'xmlname')}
 
