@@ -70,3 +70,10 @@
     margin-top: 15px;
     font-size: 18px;
 }
+
+.navbar-brand {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 25px;
+    padding-right: 25px;
+}
