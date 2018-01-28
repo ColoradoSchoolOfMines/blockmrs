@@ -78,8 +78,8 @@ def store_record(data_bytes, user_password_hash):
 
 def retrieve_record(blockchain_id, serialized_private_key, user_password_hash):
 
-    blockchain_entry = blockchain.lookup_blockchain_entry(blockchain_id)
-    ipfs_hash = blockchain_entry[0].decode(encoding='UTF-8')
+    ipfs_hash = blockchain.lookup_blockchain_entry(blockchain_id)[0]
+    #ipfs_hash = blockchain_entry[0].decode(encoding='UTF-8')
 
     ipfs_api = ipfsapi.connect('127.0.0.1', 5001)
 
