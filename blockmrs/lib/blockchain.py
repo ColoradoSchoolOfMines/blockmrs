@@ -29,4 +29,9 @@ class Blockchain:
             user_public_key = chain_file.read(550)
             recipient_public_key = chain_file.read(550)
 
-        return ipfs_hash, user_sig, user_public_key, recipient_public_key
+        return {
+            'ipfs_hash': ipfs_hash,
+            'user_sig': user_sig,
+            'user_public_key': user_public_key,
+            'recipient_public_key': recipient_public_key
+        }
