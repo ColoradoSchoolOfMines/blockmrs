@@ -38,7 +38,7 @@ class RootController(BaseController):
         return dict(page='editor stuff')
 
     @expose('blockmrs.templates.login')
-    def login(self, came_from=lurl('/'), failure=None, login=''):
+    def login(self, came_from=lurl('/'), failure=None, login='', signup=False):
         """Start the user login."""
         if failure is not None:
             if failure == 'user-not-found':
@@ -50,8 +50,11 @@ class RootController(BaseController):
         if failure is None and login_counter > 0:
             flash(_('Wrong credentials'), 'warning')
 
-        return dict(page='login', login_counter=str(login_counter),
-                    came_from=came_from, login=login)
+        return dict(page='login',
+                    login_counter=str(login_counter),
+                    came_from=came_from,
+                    signup=signup,
+                    login=login)
 
     @expose()
     def post_login(self, came_from=lurl('/')):
