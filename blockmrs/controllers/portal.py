@@ -2,6 +2,7 @@
 
 from tg import expose, request, abort, redirect
 from xml.etree import ElementTree as ET
+import uuid
 
 from blockmrs.lib.base import BaseController
 from blockmrs.model import DBSession, User, PrivateKey
@@ -34,18 +35,37 @@ class UserPortalController(BaseController):
             abort(501, 'Not logged in')
 
         if not user.blockchain_id_cache:
-            redirect('/p/edit')
-
-        private_key = DBSession.query(PrivateKey)\
-                               .filter(PrivateKey.blockchain_id == user.blockchain_id_cache)\
-                               .one_or_none()
+            root = ET.Element('patient')
+            tree = ET.ElementTree(root)
+            patient_id = ET.SubElement(root, 'patient_id')
+            patient_id.text = str(uuid.uuid4())
+            personal = ET.SubElement(root, 'personal_information')
+            given, _, family = user.display_name.rpartition(' ')
+            name = ET.SubElement(personal, 'name', attrib={'family': family, 'given': given})
+            birthdate = ET.SubElement(personal, 'birthdate')
+            birthdate.text = '1941-01-08'
+            contacts = ET.SubElement(personal, 'contacts')
+            email = ET.SubElement(contacts, 'email', attrib={'value': '{}@example.org'.format(user.user_name)})
+            phone = ET.SubElement(contacts, 'phone', attrib={'value': '+44 1632 960777'})
+            address = ET.SubElement(contacts, 'address')
+            address.text = '\n12 Foo Street\nLondon, UK\n'
+            billing = ET.SubElement(root, 'billing')
+            medical = ET.SubElement(root, 'medical')
+            pk, blockchain_id = store_record(ET.tostring(root), b'foobar')
+            user.blockchain_id_cache = blockchain_id
+            private_key = PrivateKey(user_id=user.id, blockchain_id=blockchain_id, private_key=pk)
+            DBSession.add(private_key)
+            DBSession.add(user)
+        else:
+            private_key = DBSession.query(PrivateKey)\
+                                   .filter(PrivateKey.blockchain_id == user.blockchain_id_cache)\
+                                   .one_or_none()
         user_password_hash = b'foobar'  # this would be the real user's password hash
-        record = retrieve_record(user.blockchain_id_cache, private_key,
+        record = retrieve_record(user.blockchain_id_cache, private_key.private_key,
                                  user_password_hash)
 
         xpath = '/'.join(('.', ) + args)
-        tree = ET.fromstring(record)
-        root = tree.getroot()
+        root = ET.fromstring(record)
         node = root.find(xpath)
 
         if not node:
