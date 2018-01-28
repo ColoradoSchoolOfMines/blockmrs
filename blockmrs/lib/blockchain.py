@@ -1,3 +1,6 @@
+import os
+
+
 class Blockchain:
     def __init__(self, file_name):
         self.blockchain = []
@@ -11,11 +14,12 @@ class Blockchain:
             chain_file.write(user_sig)
             chain_file.write(user_public_key)
             chain_file.write(recipient_public_key)
+        
+        with open(self.file_name, 'rb') as chain_file:
+            return int(os.path.getsize('/tmp/bullshit.dat'))//1658 - 1
 
-        self.blockchain.append((ipfs_hash, user_sig, user_public_key,
-                                recipient_public_key))
 
-        return len(self.blockchain) - 1
+        
 
     def lookup_blockchain_entry(self, index):
         
