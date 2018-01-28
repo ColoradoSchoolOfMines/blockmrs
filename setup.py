@@ -40,7 +40,8 @@ install_requires = [
     "WebHelpers2",
     "Babel",
     "filedepot",
-    "tgscheduler"
+    "tgscheduler",
+    "ipfsapi",
 ]
 
 setup(
