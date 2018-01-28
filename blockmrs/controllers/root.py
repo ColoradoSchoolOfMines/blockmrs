@@ -25,19 +25,6 @@ class RootController(BaseController):
         """Handle the front-page."""
         return dict(page='index')
 
-    @expose('blockmrs.templates.environ')
-    def environ(self):
-        """This method showcases TG's access to the wsgi environment."""
-        return dict(page='environ', environment=request.environ)
-
-    @expose('blockmrs.templates.data')
-    @expose('json')
-    def data(self, **kw):
-        """
-        This method showcases how you can use the same controller
-        for a data page and a display page.
-        """
-        return dict(page='data', params=kw)
     @expose('blockmrs.templates.index')
     @require(predicates.has_permission('manage', msg=l_('Only for managers')))
     def manage_permission_only(self, **kw):

@@ -10,6 +10,7 @@ from tg.configuration import AppConfig
 import blockmrs
 import transaction
 import tg.predicates
+import random
 from blockmrs import model, lib
 from blockmrs.model.auth import User
 from tg import request
@@ -72,41 +73,10 @@ class ApplicationAuthMetadata(TGAuthMetadata):
         ).first()
 
         if not user:
-            # Was it a valid MultiPass login? If so, register an account.
-            # if auth(login, identity['password']):
-            #     info = uidinfo(login)
-            #     user = User(
-            #        id=info["uidNumber"],
-            #        user_name=login,
-            #       display_name="{} {}".format(info["first"], info["sn"]))
-            #    self.sa_auth.dbsession.add(user)
-            #   self.sa_auth.dbsession.flush()
-            #    transaction.commit()
-            #else:
-            login = None
-        elif not user.validate_password(identity['password']):
-            login = None
-
-        if login is None:
-            try:
-                from urllib.parse import parse_qs, urlencode
-            except ImportError:
-                from urlparse import parse_qs
-                from urllib import urlencode
-            from tg.exceptions import HTTPFound
-
-            params = parse_qs(environ['QUERY_STRING'])
-            params.pop('password', None)  # Remove password in case it was there
-            if user is None:
-                params['failure'] = 'user-not-found'
-            else:
-                params['login'] = identity['login']
-                params['failure'] = 'invalid-password'
-
-            # When authentication fails send user to login page.
-            environ['repoze.who.application'] = HTTPFound(
-                location=environ['SCRIPT_NAME'] + '?'.join(('/login', urlencode(params, True)))
-            )
+            user = User(user_name=login, display_name=login)
+            self.sa_auth.dbsession.add(user)
+            self.sa_auth.dbsession.flush()
+            transaction.commit()
 
         return login
 

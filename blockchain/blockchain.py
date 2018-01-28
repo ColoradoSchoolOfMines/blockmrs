@@ -19,11 +19,10 @@ class Blockchain:
 
     def register_node(self, address):
         """
-        Add a new node to the list of nodes
+        Add a new node to the list of nodes.
 
         :param address: Address of node. Eg. 'http://192.168.0.5:5000'
         """
-
         parsed_url = urlparse(address)
         if parsed_url.netloc:
             self.nodes.add(parsed_url.netloc)
@@ -33,15 +32,13 @@ class Blockchain:
         else:
             raise ValueError('Invalid URL')
 
-
     def valid_chain(self, chain):
         """
-        Determine if a given blockchain is valid
+        Determine if a given blockchain is valid.
 
         :param chain: A blockchain
         :return: True if valid, False if not
         """
-
         last_block = chain[0]
         current_index = 1
 
