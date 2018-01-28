@@ -33,4 +33,4 @@ TODO: Somebody write a README
 
 System Architecture
 -------------------
-.. image:: BlockMRS.png
+.. image:: system-diagram.svg
