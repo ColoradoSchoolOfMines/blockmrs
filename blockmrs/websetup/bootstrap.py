@@ -53,6 +53,7 @@ def bootstrap(command, conf, vars):
         g.group_name = 'patients'
         g.display_name = 'Patients'
         g.users.append(u5)
+        model.DBSession.add(g)
 
         u6 = model.User()
         u6.user_name = 'graham'
@@ -63,8 +64,6 @@ def bootstrap(command, conf, vars):
         g.group_name = 'doctor'
         g.display_name = 'Doctors'
         g.users.append(u6)
-
-
         model.DBSession.add(g)
 
         model.DBSession.flush()

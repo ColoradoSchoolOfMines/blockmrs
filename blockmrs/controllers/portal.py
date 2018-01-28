@@ -1,6 +1,6 @@
 """Portal controller module"""
 
-from tg import expose, request, abort, redirect
+from tg import expose, request, abort, redirect, predicates
 from xml.etree import ElementTree as ET
 import uuid
 
@@ -23,6 +23,8 @@ class NamespaceViewController(BaseController):
 
 
 class UserPortalController(BaseController):
+    allow_only = predicates.not_anonymous()
+
     @expose()
     def _lookup(self, *args):
         uname = request.identity['repoze.who.userid']

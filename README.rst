@@ -29,8 +29,6 @@ BlockMRS takes advantage of the latest blockchain technology to allow for
 seamless transfer of medical data. Blocks on the blockchain are signed and
 ecrypted to ensure authenticity and privacy.
 
-TODO: Somebody write a README
-
 System Architecture
 -------------------
 .. image:: system-diagram.svg
