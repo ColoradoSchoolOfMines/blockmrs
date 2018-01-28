@@ -1,6 +1,6 @@
 <html py:extends="master.xhtml" py:strip="True">
     <head py:block="head" py:strip="True">
-        <title py:block="master_title">Welcome to BlockMRS</title>
+        <title py:block="master_title">BlockMRS</title>
     </head>
 
     <body py:block="body" py:strip="True">
@@ -26,24 +26,35 @@
         </div>
       </div>
 
-      <!--
       <div class="row">
         <div class="col-md-4">
-          <h3>Code your data model</h3>
-          <p> Design your data <code>model</code>, Create the database, and Add some bootstrap data.</p>
+          <h3>Privacy Concious</h3>
+          <p>
+            BlockMRS is designed with the patient's privacy in mind.  BlockMRS
+            generates a new public-private key for every transaction on the
+            blockchain and each block has a constant size. This ensures that
+            malicious actors cannot infer anything about a patient by
+            inspecting the blockchain.
+          </p>
         </div>
 
         <div class="col-md-4">
-          <h3>Design your URL architecture</h3>
-          <p> Decide your URLs, Program your <code>controller</code> methods, Design your
-            <code>templates</code>, and place some static files (CSS and/or Javascript). </p>
+          <h3>Distributed</h3>
+          <p>
+            BlockMRS uses a distrubuted filesystem called <i>InterPlanetary
+              File System (IPFS)</i> to store medical records.
+          </p>
         </div>
 
         <div class="col-md-4">
-          <h3>Distribute your app</h3>
-          <p> Test your source, Generate project documents, Build a distribution.</p>
+          <h3>Blockchain-Backed</h3>
+          <p>
+            BlockMRS takes advantage of the latest blockchain technology to
+            allow for seamless transfer of medical data. Blocks on the
+            blockchain are signed and ecrypted to ensure authenticity and
+            privacy.
+          </p>
         </div>
       </div>
-      -->
     </body>
 </html>
