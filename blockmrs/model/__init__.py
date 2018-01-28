@@ -57,6 +57,6 @@ def init_model(engine):
     # mapper(Reflected, t_reflected)
 
 # Import your model modules here.
-from blockmrs.model.auth import User, Group, Permission
+from blockmrs.model.auth import User, Group, Permission, PrivateKey
 
-__all__ = ('User', 'Group', 'Permission')
+__all__ = ('User', 'Group', 'Permission', 'PrivateKey')

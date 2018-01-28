@@ -35,7 +35,7 @@
       <ul py:if="tg.auth_stack_enabled" class="nav navbar-nav navbar-right">
         <li py:if="not request.identity"><a href="${tg.url('/login?signup=True')}">Sign Up</a></li>
         <li py:if="not request.identity"><a href="${tg.url('/login')}">Login</a></li>
-        <li py:if="request.identity"><a href="${tg.url('/p/{}'.format(request.identity['repoze.who.userid']))}">User Portal</a></li>
+        <li py:if="request.identity"><a href="${tg.url('/p/')}">User Portal</a></li>
         <li py:if="request.identity"><a href="${tg.url('/logout_handler')}">Logout</a></li>
         <li py:if="tg.predicates.has_permission('admin')"><a href="${tg.url('/admin')}">Admin</a></li>
       </ul>

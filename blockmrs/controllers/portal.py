@@ -18,6 +18,7 @@ class NamespaceViewController(BaseController):
         """Handle the user's profile page."""
         return dict(page='profile', view=match_field(self.nselem))
 
+
 class UserPortalController(BaseController):
     @expose()
     def _lookup(self, *args):
