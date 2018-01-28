@@ -40,3 +40,33 @@
   margin-bottom: 0;
   color: #555;
 }
+
+.ns-button {
+    float: left;
+    width: 200px;
+    height: 200px;
+    text-align: center;
+    background-color: #0099cc;
+    color: #ffffff;
+    margin: 10px;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.ns-button:hover {
+    background-color: #DC5C4B;
+    color: #ffffff;
+}
+
+.ns-link {
+    margin-top: 15px;
+    font-size: 18px;
+}
