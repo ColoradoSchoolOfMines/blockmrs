@@ -12,7 +12,7 @@ from blockchain import Blockchain
 def store_record(data_bytes, user_password_hash):
 
     # Key generation and serialization
-    
+
     private_key = rsa.generate_private_key(
         public_exponent=65537,
         key_size=4096,
@@ -48,8 +48,8 @@ def store_record(data_bytes, user_password_hash):
     # IPFS setup #
     ##############
 
-    api = ipfsapi.connect('127.0.0.1', 5001)
-    ipfs_file_handle = api.add('/tmp/encrypted.txt')
+    ipfs_api = ipfsapi.connect('127.0.0.1', 5001)
+    ipfs_file_handle = ipfs_api.add('/tmp/encrypted.txt')
     ipfs_hash = ipfs_file_handle['Hash']
     ipfs_hash_bytes = ipfs_hash.encode(encoding='UTF-8')
 
@@ -66,10 +66,49 @@ def store_record(data_bytes, user_password_hash):
 
     public_key_bytes = public_key.public_bytes(encoding=serialization.Encoding.DER, format=serialization.PublicFormat.SubjectPublicKeyInfo)
 
-    add_blockchain_entry(ipfs_hash_bytes, hash_signature, public_key_bytes, public_key_bytes)    
+
+    blockchain = Blockchain('chain.dat')
+    blockchain_id = blockchain.add_blockchain_entry(ipfs_hash_bytes, hash_signature, public_key_bytes, public_key_bytes)    
+
 
     os.remove('/tmp/encrypted.txt')
-
     return (serialized_private_key, blockchain_id)
 
-    
+def retrieve_record(blockchain_id, serialized_private_key, user_password_hash):
+
+    blockchain = Blockchain('chain.dat')
+    blockchain_entry = blockchain.lookup_blockchain_entry(blockchain_id)
+    ipfs_hash = blockchain_entry[0].decode(encoding='UTF-8')
+
+    ipfs_api = ipfsapi.connect('127.0.0.1', 5001)
+
+    encrypted_file = ipfs_api.cat(ipfs_hash)
+
+    private_key = serialization.load_pem_private_key(
+        serialized_private_key,
+        password=user_password_hash,
+        backend=default_backend()
+    )
+
+    public_key = private_key.public_key()
+
+    public_key.verify(
+        blockchain_entry[1],
+        blockchain_entry[0],
+        padding.PSS(
+            mgf=padding.MGF1(hashes.SHA256()),
+            salt_length=padding.PSS.MAX_LENGTH
+        ),
+        hashes.SHA256()
+    )
+
+
+    return private_key.decrypt(
+        ciphertext,
+        padding.OAEP(
+            mgf=padding.MGF1(algorithm=hashes.SHA1()),
+            algorithm=hashes.SHA1(),
+            label=None
+        )
+    )
+

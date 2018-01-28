@@ -18,10 +18,7 @@ with open("private_key.pem", "rb") as key_file:
         backend=default_backend()
     )
 
-api = ipfsapi.connect('127.0.0.1', 5001)
-ipfs_file_handle = api.add('dummy.csv')
-ipfs_hash = ipfs_file_handle['Hash']
-ipfs_hash_bytes = ipfs_hash.encode(encoding='UTF-8')
+
 
 hash_signature = private_key.sign(
     ipfs_hash_bytes,
