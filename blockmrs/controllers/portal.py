@@ -1,6 +1,6 @@
 """Portal controller module"""
 
-from tg import expose, request, abort, redirect
+from tg import expose, request, abort, redirect, predicates
 from xml.etree import ElementTree as ET
 
 from blockmrs.lib.base import BaseController
@@ -22,6 +22,8 @@ class NamespaceViewController(BaseController):
 
 
 class UserPortalController(BaseController):
+    allow_only = predicates.not_anonymous()
+
     @expose()
     def _lookup(self, *args):
         uname = request.identity['repoze.who.userid']
@@ -36,8 +38,8 @@ class UserPortalController(BaseController):
         if not user.blockchain_id_cache:
             redirect('/p/edit')
 
-        private_key = DBSession.query(PrivateKey)\
-                               .filter(PrivateKey.blockchain_id == user.blockchain_id_cache)\
+        private_key = DBSession.query(PrivateKey) \
+                               .filter(PrivateKey.blockchain_id == user.blockchain_id_cache) \
                                .one_or_none()
         user_password_hash = b'foobar'  # this would be the real user's password hash
         record = retrieve_record(user.blockchain_id_cache, private_key,
