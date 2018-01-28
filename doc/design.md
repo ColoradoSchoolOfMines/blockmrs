@@ -2,6 +2,9 @@
 
 (A) = application layer
 
+Any time you need to encrypt with a public key, it means create a new
+public-private key pair.
+
 ## 1. Update your own data
 1. Create master record, or find existing master record and update
 2. Encrypt file with public key
@@ -27,11 +30,12 @@
 ## 3. Doctor modifies patient data
 1. (A) Requests data from patient
 2. Find latest record that includes the patient's and doctor's public key
-3. Decrypt IPFS file
-4. *Appointment occurs*
-5. Make modifications to the patient's record
-6. Encrypt file with patient's and doctor's public keys
-7. Store to IPFS and get a hash
-8. (A) Send hash to patient
-9. (A) *Patient does (1), with the update being the diff of the master record
-   and the doctors modifications.*
+3. Verify record
+4. Decrypt IPFS file
+5. *Appointment occurs*
+6. Make modifications to the patient's record
+7. Encrypt file with patient's and doctor's public keys
+8. Store to IPFS and get a hash
+9. (A) Send hash to patient
+10. (A) *Patient does (1), with the update being the diff of the master record
+    and the doctors modifications.*
