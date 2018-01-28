@@ -3,8 +3,8 @@ import os
 from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import padding, rsa
-from cryptography.hazmat.primitives.serialization import *
 from blockchain import Blockchain
+from cryptography.hazmat.primitives import serialization as serial
 
 
 def store_record(data_bytes, user_password_hash):
@@ -18,16 +18,16 @@ def store_record(data_bytes, user_password_hash):
     )
 
     serialized_private_key = private_key.private_bytes(
-        Encoding.PEM,
-        PrivateFormat.PKCS8,
-        BestAvailableEncryption(user_password_hash),
+        serial.Encoding.PEM,
+        serial.PrivateFormat.PKCS8,
+        serial.BestAvailableEncryption(user_password_hash),
     )
 
     public_key = private_key.public_key()
 
     serialized_public_key = public_key.public_bytes(
-        Encoding.PEM,
-        PublicFormat.SubjectPublicKeyInfo,
+        serial.Encoding.PEM,
+        serial.PublicFormat.SubjectPublicKeyInfo,
     )
 
     ciphertext = public_key.encrypt(
