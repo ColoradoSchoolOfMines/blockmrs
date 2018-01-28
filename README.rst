@@ -20,7 +20,8 @@ about a patient by inspecting the blockchain.
 Distributed
 -----------
 BlockMRS uses a distrubuted filesystem called *InterPlanetary File System
-(IPFS)* to store medical records.
+(IPFS)* to store medical records. This creates a common way for medical service
+providers to access the latest, up-to-date patient data.
 
 Blockchain-Backed
 -----------------

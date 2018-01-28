@@ -7,12 +7,91 @@
       <div class="row">
         <div class="col-md-3">
           <h1>${u.display_name}</h1>
-          <a class="btn btn-primary btn-block" href="${tg.url('/p/{}/edit'.format(u.user_name))}">
-            ${h.icon('pencil')} Edit Personal Information
-          </a>
         </div>
         <div class="col-md-9">
-          some random crap
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Personal Information
+            </div>
+            <div class="panel-body">
+              <a class="btn btn-primary pull-right" href="${tg.url('/p/{}/edit'.format(u.user_name))}">
+                ${h.icon('pencil')} Edit
+              </a>
+
+              <dl class="dl-horizontal">
+                <dt>Full Name</dt>
+                <dd>Jonathan Sumner Evans</dd>
+              </dl>
+
+              <dl class="dl-horizontal">
+                <dt>Address</dt>
+                <dd>
+                  <address>
+                    123 Foo St.<br />
+                    Bar City, CO 81275
+                  </address>
+                </dd>
+              </dl>
+
+              <dl class="dl-horizontal">
+                <dt>Home Phone</dt>
+                <dd>+1 (123) 456-7890</dd>
+              </dl>
+
+              <dl class="dl-horizontal">
+                <dt>Cell Phone</dt>
+                <dd>+1 (098) 765-4321</dd>
+              </dl>
+
+              <dl class="dl-horizontal">
+                <dt>Emergency Contacts</dt>
+                <dd>
+                  <address>
+                    <b>Amy Evans</b><br />
+                    +1 (456) 123-7890
+                  </address>
+                  <address>
+                    <b>Bryan Evans</b><br />
+                    +1 (234) 567-8901
+                  </address>
+                </dd>
+              </dl>
+
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Insurance Information
+            </div>
+            <div class="panel-body">
+              <dl class="dl-horizontal">
+                <dt>Insurance Company</dt>
+                <dd>UnitedHealth</dd>
+              </dl>
+
+              <dl class="dl-horizontal">
+                <dt>Policy Number</dt>
+                <dd>CWE8175184719</dd>
+              </dl>
+
+              <dl class="dl-horizontal">
+                <dt>Plan Code</dt>
+                <dd>847</dd>
+              </dl>
+
+              <dl class="dl-horizontal">
+                <dt>Address</dt>
+                <dd>
+                  <address>
+                    <b>UnitedHealth Group</b><br />
+                    123 P.O. Box 1459<br />
+                    Minneapolis, MN 55440-1459
+                  </address>
+                </dd>
+              </dl>
+            </div>
+          </div>
         </div>
       </div>
     </body>
