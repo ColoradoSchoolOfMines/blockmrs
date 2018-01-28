@@ -74,7 +74,6 @@ class RootController(BaseController):
 
         # Do not use tg.redirect with tg.url as it will add the mountpoint
         # of the application twice.
-        print(came_from)
         return HTTPFound(location=came_from)
 
     @expose()
@@ -90,5 +89,4 @@ class RootController(BaseController):
     @expose()
     def portal(self):
         """Redirect the user to their portal."""
-        userid = request.identity['repoze.who.userid']
-        return HTTPFound(location=lurl('/p/{}'.format(userid)))
+        return HTTPFound(location=lurl('/p/'))
