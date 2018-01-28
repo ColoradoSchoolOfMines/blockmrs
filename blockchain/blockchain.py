@@ -156,7 +156,7 @@ class Blockchain:
 
          - Find a number p' such that hash(pp') contains leading 4 zeroes
          - Where p is the previous proof, and p' is the new proof
-         
+
         :param last_block: <dict> last Block
         :return: <int>
         """
