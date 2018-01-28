@@ -126,16 +126,18 @@ class Blockchain:
 
     @staticmethod
     def verify_sig(data, sig, pub_key):
-        serial_pub_key = serialization.load_pem_public_key(pub_key,
+        serial_pub_key = serialization.load_der_public_key(pub_key,
                                                            backend=default_backend())
         try:
-            pub_key.verify(
+            serial_pub_key.verify(
                 sig,
                 data,
                 padding.PSS(
                     mgf=padding.MGF1(hashes.SHA256()),
                     salt_length=padding.PSS.MAX_LENGTH
-                ))
+                ),
+                hashes.SHA256()
+            )
             return True
         except InvalidSignature:
             return False
