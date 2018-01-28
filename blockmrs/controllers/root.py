@@ -10,12 +10,14 @@ from tgext.admin.controller import AdminController
 
 from blockmrs.lib.base import BaseController
 from blockmrs.controllers.error import ErrorController
+from blockmrs.controllers.portal import UserPortalController
 
 __all__ = ['RootController']
 
 class RootController(BaseController):
     admin = AdminController(model, DBSession, config_type=AdminConfig, translations=config.sa_auth.translations)
     error = ErrorController()
+    p = UserPortalController()
 
     def _before(self, *args, **kw):
         tmpl_context.project_name = "BlockMRS"
@@ -38,7 +40,7 @@ class RootController(BaseController):
         return dict(page='editor stuff')
 
     @expose('blockmrs.templates.login')
-    def login(self, came_from=lurl('/'), failure=None, login='', signup=False):
+    def login(self, came_from=lurl('/portal'), failure=None, login='', signup=False):
         """Start the user login."""
         if failure is not None:
             if failure == 'user-not-found':
@@ -57,7 +59,7 @@ class RootController(BaseController):
                     login=login)
 
     @expose()
-    def post_login(self, came_from=lurl('/')):
+    def post_login(self, came_from=lurl('/portal')):
         """
         Redirect the user to the initially requested page on successful
         authentication or redirect her back to the login page if login failed.
@@ -72,6 +74,7 @@ class RootController(BaseController):
 
         # Do not use tg.redirect with tg.url as it will add the mountpoint
         # of the application twice.
+        print(came_from)
         return HTTPFound(location=came_from)
 
     @expose()
@@ -83,3 +86,9 @@ class RootController(BaseController):
         """
         flash(_('We hope to see you soon!'))
         return HTTPFound(location=came_from)
+
+    @expose()
+    def portal(self):
+        """Redirect the user to their portal."""
+        userid = request.identity['repoze.who.userid']
+        return HTTPFound(location=lurl('/p/{}'.format(userid)))

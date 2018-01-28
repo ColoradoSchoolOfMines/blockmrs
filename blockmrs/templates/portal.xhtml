@@ -6,10 +6,13 @@
     <body py:block="body" py:strip="True">
       <div class="row">
         <div class="col-md-3">
-
+          <h1>${u.display_name}</h1>
+          <a class="btn btn-primary btn-block" href="${tg.url('/p/{}/edit'.format(u.user_name))}">
+            ${h.icon('pencil')} Edit Personal Information
+          </a>
         </div>
         <div class="col-md-9">
-
+          some random crap
         </div>
       </div>
     </body>
