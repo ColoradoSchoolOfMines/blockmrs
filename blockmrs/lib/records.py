@@ -67,18 +67,18 @@ def store_record(data_bytes, user_password_hash):
         format=serialization.PublicFormat.SubjectPublicKeyInfo
     )
 
-    blockchain_id = blockchain.add_blockchain_entry(ipfs_hash_bytes,
-                                                    hash_signature,
-                                                    public_key_bytes,
-                                                    public_key_bytes)
+    record_id = blockchain.new_entry(ipfs_hash_bytes,
+                                     hash_signature,
+                                     public_key_bytes,
+                                     public_key_bytes)
 
     os.remove('/tmp/encrypted.txt')
-    return (serialized_private_key, blockchain_id)
+    return (serialized_private_key, record_id)
 
 
-def retrieve_record(blockchain_id, serialized_private_key, user_password_hash):
-    data = blockchain.lookup_blockchain_entry(blockchain_id)
-    ipfs_hash = data['ipfs_hash']
+def retrieve_record(record_id, serialized_private_key, user_password_hash):
+    record = blockchain.get_entry(record_id)
+    ipfs_hash = record['ipfs_hash']
 
     ipfs_api = ipfsapi.connect('127.0.0.1', 5001)
 
@@ -93,8 +93,8 @@ def retrieve_record(blockchain_id, serialized_private_key, user_password_hash):
     public_key = private_key.public_key()
 
     public_key.verify(
-        data['user_sig'],
-        data['ipfs_hash'],
+        record['user_sig'],
+        record['ipfs_hash'],
         padding.PSS(
             mgf=padding.MGF1(hashes.SHA256()),
             salt_length=padding.PSS.MAX_LENGTH
