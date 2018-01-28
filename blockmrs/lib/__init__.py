@@ -1,4 +1,4 @@
 # -*- coding: utf-8 -*-
-from blockchain import Blockchain
+from blockmrs.lib.blockchain import Blockchain
 
 blockchain = Blockchain('chain.dat')
