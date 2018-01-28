@@ -4,8 +4,6 @@ from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import padding, rsa
 from cryptography.hazmat.primitives.serialization import *
-# from cryptography.hazmat.primitives.serialization.Encoding import PEM
-# from cryptography.hazmat.primitives.serialization.PrivateFormat import PKCS8
 from blockchain import Blockchain
 
 
@@ -24,7 +22,7 @@ def store_record(data_bytes, user_password_hash):
         PrivateFormat.PKCS8,
         BestAvailableEncryption(user_password_hash),
     )
- 
+
     public_key = private_key.public_key()
 
     serialized_public_key = public_key.public_bytes(
@@ -64,15 +62,19 @@ def store_record(data_bytes, user_password_hash):
         hashes.SHA256()
     )
 
-    public_key_bytes = public_key.public_bytes(encoding=serialization.Encoding.DER, format=serialization.PublicFormat.SubjectPublicKeyInfo)
+    public_key_bytes = public_key.public_bytes(
+        encoding=serialization.Encoding.DER,
+        format=serialization.PublicFormat.SubjectPublicKeyInfo
+    )
 
 
     blockchain = Blockchain('chain.dat')
-    blockchain_id = blockchain.add_blockchain_entry(ipfs_hash_bytes, hash_signature, public_key_bytes, public_key_bytes)    
-
+    blockchain_id = blockchain.add_blockchain_entry(ipfs_hash_bytes, hash_signature,
+                                                    public_key_bytes, public_key_bytes)
 
     os.remove('/tmp/encrypted.txt')
     return (serialized_private_key, blockchain_id)
+
 
 def retrieve_record(blockchain_id, serialized_private_key, user_password_hash):
 
@@ -102,9 +104,8 @@ def retrieve_record(blockchain_id, serialized_private_key, user_password_hash):
         hashes.SHA256()
     )
 
-
     return private_key.decrypt(
-        ciphertext,
+        encrypted_file,
         padding.OAEP(
             mgf=padding.MGF1(algorithm=hashes.SHA1()),
             algorithm=hashes.SHA1(),
