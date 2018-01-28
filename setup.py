@@ -42,6 +42,7 @@ install_requires = [
     "filedepot",
     "tgscheduler",
     "ipfsapi",
+    "cryptography",
 ]
 
 setup(
