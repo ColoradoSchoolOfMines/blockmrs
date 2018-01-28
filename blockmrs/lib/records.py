@@ -69,8 +69,10 @@ def store_record(data_bytes, user_password_hash):
 
 
     blockchain = Blockchain('chain.dat')
-    blockchain_id = blockchain.add_blockchain_entry(ipfs_hash_bytes, hash_signature,
-                                                    public_key_bytes, public_key_bytes)
+    blockchain_id = blockchain.add_blockchain_entry(ipfs_hash_bytes,
+                                                    hash_signature,
+                                                    public_key_bytes,
+                                                    public_key_bytes)
 
     os.remove('/tmp/encrypted.txt')
     return (serialized_private_key, blockchain_id)
