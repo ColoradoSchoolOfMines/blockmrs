@@ -6,7 +6,7 @@ Sports Medical Records on a Blockchain
 BlockMRS is a privacy concious, decentralized, blockchain-backed, medical
 record system for the 21st Century.
 
-It stores patient records in IPFS using state-of-the art asymetric encryption
+It stores patient records in IPFS using state-of-the art asymmetric encryption
 giving patients control over their health data.
 
 Privacy Concious
